@@ -71,8 +71,17 @@
 
     <!-- Analysis -->
     <section id="analysis">
-      <h2>3. Analysis</h2>
+     <h2>3. Analysis</h2>
 
+     <h3>3.1 Video Game Ratings and Sales</h3>
+     <p>I wanted to find out whether games with higher reviews sell more and to explore the relationship between the different types of sales and review scores. I started by calculating correlation coefficients between variables. There was a correlation coefficient of 0.954 between total sales and North American sales, showing an extremely strong correlation. North American sales make up 48.7% of total sales, which explains this strong relationship. However, the correlation between sales and review scores was weak: 0.248 between total sales and meta score, and 0.102 between total sales and user score. There was a moderate correlation between user and meta scores at 0.524, but still weaker than between sales variables.</p>
+
+     <p>I initially thought this weak correlation might be due to differences in rating scales between critics and users. To confirm, I created a boxplot comparing the two scores using ggplot. The medians were nearly identical, but the mean difference (1.67) was notable. A histogram comparison showed that meta scores had more high ratings, while user scores had more low ratings—explaining why meta score correlates slightly better with sales.</p>
+
+     <h3>3.2 Time, Sales, and Review Scores</h3>
+     <p>To further analyze sales, I examined how time affected sales globally versus in North America. The correlation coefficient between total sales and release date was 0.273, much lower than between number of games released and release date. The same holds for North American sales (0.229). The trend of outliers was stronger for total sales, likely due to holiday-season spikes. The top ten sales months were mostly October and November. Publishers have recognized this, timing many releases in those months. While sales increased through the 2000s, review scores did not.</p>
+
+     <p>Review scores began to drop sharply starting in 2000. Meta scores decreased drastically but began rising again around 2010, whereas user scores continued to decline. The correlation coefficient between meta score and release date was -0.325, while user score’s was -0.837, showing a much stronger negative correlation. This divergence explains why meta score aligns more closely with total sales.</p>
     </section>
 
     <!-- Conclusion -->
