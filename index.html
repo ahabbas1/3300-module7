@@ -66,8 +66,9 @@
       <h3>2.3 Combining Reviews and Sales</h3>
       <p>Since both datasets included the same game title multiple times based on platform, I merged based on both the game title and platform. Both datasets were also vastly different in the number of observations. I decided to create two separate datasets: one containing only data that appeared in both (intersection), and another containing all rows from both (union). All this work was done in <code>combining_vgs.R</code>. Then, I imported both data frames into <code>cleaning_vgs.R</code> for further cleaning.</p>
 
-      <p>Since most of my cleaning was column-based, I created a function to iterate over both datasets to clean them. This included trimming whitespace on the summary and publisher, converting sales data to numeric, and converting platform, publisher, and title into factors. I formatted release dates into “Month, Year” and combined release date columns from both sources. I dropped all sales data except North American and total sales, and removed redundant columns. The resulting datasets, <code>VGSales_union.csv</code> and <code>VGSales_intersect.csv</code>, contained 68,288 and 12,288 observations respectively.</p>
+        <p>Since most of my cleaning was column-based, I created a function to iterate over both datasets to clean them. This included trimming whitespace on the summary and publisher, converting sales data to numeric, and converting platform, publisher, and title into factors. I formatted release dates into “Month, Year” and combined release date columns from both sources. I dropped all sales data except North American and total sales, and removed redundant columns. The resulting datasets, <code>VGSales_union.csv</code> and <code>VGSales_intersect.csv</code>, contained 68,288 and 12,288 observations respectively.</p>
     </section>
+
 
     <!-- Analysis -->
     <section id="analysis">
