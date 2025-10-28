@@ -66,7 +66,32 @@
       <h3>2.3 Combining Reviews and Sales</h3>
       <p>Since both datasets included the same game title multiple times based on platform, I merged based on both the game title and platform. Both datasets were also vastly different in the number of observations. I decided to create two separate datasets: one containing only data that appeared in both (intersection), and another containing all rows from both (union). All this work was done in <code>combining_vgs.R</code>. Then, I imported both data frames into <code>cleaning_vgs.R</code> for further cleaning.</p>
 
-        <p>Since most of my cleaning was column-based, I created a function to iterate over both datasets to clean them. This included trimming whitespace on the summary and publisher, converting sales data to numeric, and converting platform, publisher, and title into factors. I formatted release dates into “Month, Year” and combined release date columns from both sources. I dropped all sales data except North American and total sales, and removed redundant columns. The resulting datasets, <code>VGSales_union.csv</code> and <code>VGSales_intersect.csv</code>, contained 68,288 and 12,288 observations respectively.</p>
+      <p>Since most of my cleaning was column-based, I created a function to iterate over both datasets to clean them. This included trimming whitespace on the summary and publisher, converting sales data to numeric, and converting platform, publisher, and title into factors. I formatted release dates into “Month, Year” and combined release date columns from both sources. I dropped all sales data except North American and total sales, and removed redundant columns. The resulting datasets, <code>VGSales_union.csv</code> and <code>VGSales_intersect.csv</code>, contained 68,288 and 12,288 observations respectively.</p>
+      <figure>
+      <figcaption><strong>Table 1. Data Dictionary.</strong></figcaption>
+      <table>
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Type</th>
+          <th>Source</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>game_title</td><td>Text</td><td>both</td><td>Title of game</td></tr>
+        <tr><td>platform</td><td>Text</td><td>both</td><td>Abbreviation of the video game console used to play the game</td></tr>
+        <tr><td>publisher</td><td>Text</td><td>VGChartz</td><td>The publisher of the video game</td></tr>
+        <tr><td>na_sales</td><td>Numeric</td><td>VGChartz</td><td>The number of units sold in North America</td></tr>
+        <tr><td>total_sales</td><td>Numeric</td><td>VGChartz</td><td>The total number of units sold worldwide</td></tr>
+        <tr><td>summary</td><td>Text</td><td>Metacritic</td><td>A description of the video game</td></tr>
+        <tr><td>release_date</td><td>Date</td><td>both</td><td>The month and year that the game was released</td></tr>
+        <tr><td>meta_score</td><td>Numeric</td><td>Metacritic</td><td>The review score as decided on by game critics</td></tr>
+        <tr><td>user_score</td><td>Numeric</td><td>Metacritic</td><td>The review score as decided on by the users of Metacritic</td></tr>
+      </tbody>
+      </table>
+      </figure>
+    
     </section>
 
 
@@ -99,14 +124,43 @@
     <!-- 3.2 Video Game Publishers -->
       <h3>3.2 Video Game Publishers</h3>
       <p>To find out which video game publishers have the highest sales, I created a summary data frame, <code>publisher_df</code>, which was grouped by the publisher. In this data frame, I included the ratings’ average, the sales’ sum, and the number of games each publisher has released. To find the publishers with the highest sales, I took a <em>slice_max</em> of the data frame based on total sales. The result appears in <strong>Table 2</strong>. The information is also saved in the <code>publisher_sales.csv</code> file in the project folder.</p>
-
-      <p>With the strong correlation between the number of games and total sales, we can predict that a company’s average meta score doesn’t significantly impact its total sales. When we compare the average meta score of <strong>71.145</strong> to the values in Table 2, we see that meta scores and sales aren’t strongly correlated, as 30% of the observations in Table 2 are below the average. This can also be seen in <strong>Figure 4</strong>, a scatterplot of the number of games released and the meta score.</p>
-
-    <!-- Figure 3 -->
+      <figure>
+        <figcaption><strong>Table 2. Slice Max Summary.</strong></figcaption>
+        <table>
+        <thead>
+          <tr>
+          <th></th>
+          <th>publisher</th>
+          <th>total_sales</th>
+          <th>na_sales</th>
+          <th>user_score</th>
+          <th>meta_score</th>
+          <th>number of games</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Nintendo</td><td>1915460000</td><td>859150000</td><td>7.86772727272727</td><td>77.3954545454545</td><td>1410</td></tr>
+          <tr><td>2</td><td>Activision</td><td>727710000</td><td>428300000</td><td>6.80404858299595</td><td>70.9635627530364</td><td>1567</td></tr>
+          <tr><td>3</td><td>Electronic Arts</td><td>659150000</td><td>329130000</td><td>6.94391891891892</td><td>73.8192567567568</td><td>1591</td></tr>
+          <tr><td>4</td><td>Sony Computer Entertainment</td><td>557090000</td><td>239880000</td><td>7.54783950617284</td><td>74.9845679012346</td><td>1365</td></tr>
+          <tr><td>5</td><td>Ubisoft</td><td>500080000</td><td>260830000</td><td>7.00683012259194</td><td>70.7302977232925</td><td>1646</td></tr>
+          <tr><td>6</td><td>EA Sports</td><td>497620000</td><td>276250000</td><td>6.72665036674817</td><td>79.1075794621027</td><td>800</td></tr>
+          <tr><td>7</td><td>THQ</td><td>339470000</td><td>208390000</td><td>7.26092715231788</td><td>69.0794701986755</td><td>1092</td></tr>
+          <tr><td>8</td><td>Sega</td><td>291080000</td><td>119560000</td><td>7.35538116591928</td><td>72.2959641255605</td><td>2191</td></tr>
+          <tr><td>9</td><td>Capcom</td><td>274690000</td><td>104710000</td><td>7.58064516129032</td><td>74.7507331378299</td><td>1062</td></tr>
+          <tr><td>10</td><td>Rockstar Games</td><td>263430000</td><td>125600000</td><td>7.75555555555556</td><td>82.9506172839506</td><td>175</td></tr>
+        </tbody>
+        </table>
+      </figure>
+      
+      <p>I noticed that all but one publisher released at least 800 games. I calculated the correlation between the total sales and the number of games a publisher had released. The coefficient of correlation between these two variables was .715, which demonstrates a strong correlation between the number of games released and the total sales of a publisher. Because of this strong correlation, I thought creating a scatterplot between the two variables would be useful to analyze the data further. The scatterplot can be seen in Figure 3 below.</p>
+   <!-- Figure 3 -->
     <figure>
       <img src="images/3-total_sales_number_games_released.jpg" alt="Scatterplot of number of games per publisher versus total sales">
       <figcaption>Figure 3. Scatterplot of the Number of Games by a Publisher and Their Total Sales.</figcaption>
     </figure>
+    <p>This correlation does not apply to the number of games released and the publisher’s average meta score. The correlation coefficient between these two variables is -.013, which is evidence of no relationship between the number of games released and the average meta score.</p>
+    <p>With the strong correlation between the number of games and total sales, we can predict that a company’s average meta score doesn’t significantly impact its total sales. When we compare the average meta score of <strong>71.145</strong> to the values in Table 2, we see that meta scores and sales aren’t strongly correlated, as 30% of the observations in Table 2 are below the average. This can also be seen in <strong>Figure 4</strong>, a scatterplot of the number of games released and the meta score.</p>
 
     <!-- Figure 4 -->
     <figure>
@@ -115,7 +169,33 @@
     </figure>
 
     <p>I compared the top ten game publishers by North American sales and by total sales for the past ten years. I wanted to know if there is a difference between those with high sales in North America and those with high total sales. Could another region be driving publisher sales success? I found the same game publishers in both lists, but in a slightly different order. Total sales ranged from about 260 million games to about <strong>1.9 billion</strong> games. Games sold in North America were responsible for about <strong>40–60%</strong> of the total sales numbers. More details can be found in the <code>top_10_NA</code> and <code>top_10_total</code> data frames. The top ten publishers appear in <strong>Table 3</strong>.</p>
+    
+    <figure>
+      <figcaption><strong>Table 3. Top publishers by North American sales vs. top publishers by total sales.</strong></figcaption>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>North American games sold</th>
+            <th>Total games sold</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Nintendo</td><td>Nintendo</td></tr>
+          <tr><td>2</td><td>Activision</td><td>Activision</td></tr>
+          <tr><td>3</td><td>Electronic Arts</td><td>Electronic Arts</td></tr>
+          <tr><td>4</td><td>EA Sports</td><td>Sony Computer Entertainment</td></tr>
+          <tr><td>5</td><td>Ubisoft</td><td>Ubisoft</td></tr>
+          <tr><td>6</td><td>Sony Computer Entertainment</td><td>EA Sports</td></tr>
+          <tr><td>7</td><td>THQ</td><td>THQ</td></tr>
+          <tr><td>8</td><td>Rockstar Games</td><td>Sega</td></tr>
+          <tr><td>9</td><td>Sega</td><td>Capcom</td></tr>
+          <tr><td>10</td><td>Capcom</td><td>Rockstar Games</td></tr>
+        </tbody>
+      </table>
+    </figure>
 
+    
     <!-- 3.3 Release Date -->
     <h3>3.3 Release Date</h3>
     <p>To determine how sales, number of games released, and review scores have changed, I created a data frame called <code>by_month</code>, which grouped the games by month and calculated the average review scores, the sum of sales, and the number of games. To make the dates easier to use in a scatterplot, I changed the data type to a date format by setting the column as a date with the day value being the first day of the month the game was released.</p>
